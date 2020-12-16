@@ -1,1 +1,10 @@
 INSERT INTO `ims`.`customers` (`first_name`, `surname`) VALUES ('jordan', 'harrison');
+INSERT INTO `ims`.`customers` (`first_name`, `surname`) VALUES ('james', 'dickinson');
+INSERT INTO `ims`.`customers` (`first_name`, `surname`) VALUES ('ryan', 'glossop');
+INSERT INTO `ims`.`customers` (`first_name`, `surname`) VALUES ('dave', 'davidson');
+INSERT INTO `ims`.`customers` (`first_name`, `surname`) VALUES ('jimmy', 'mcjimson');
+INSERT INTO `ims`.`customers` (`first_name`, `surname`) VALUES ('craig', 'taylor');
+INSERT INTO `ims`.`customers` (`first_name`, `surname`) VALUES ('john', 'johnson');
+INSERT INTO `ims`.`customers` (`first_name`, `surname`) VALUES ('rory', 'mcrory');
+INSERT INTO `ims`.`customers` (`first_name`, `surname`) VALUES ('phil', 'jupitus');
+INSERT INTO `ims`.`customers` (`first_name`, `surname`) VALUES ('chris', 'bacon');
