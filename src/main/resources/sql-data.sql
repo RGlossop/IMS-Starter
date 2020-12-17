@@ -8,3 +8,15 @@ INSERT INTO `ims`.`customers` (`first_name`, `surname`) VALUES ('john', 'johnson
 INSERT INTO `ims`.`customers` (`first_name`, `surname`) VALUES ('rory', 'mcrory');
 INSERT INTO `ims`.`customers` (`first_name`, `surname`) VALUES ('phil', 'jupitus');
 INSERT INTO `ims`.`customers` (`first_name`, `surname`) VALUES ('chris', 'bacon');
+
+INSERT INTO `ims`.`items` (`name`, `value`) VALUES ('Borat', 15.50);
+INSERT INTO `ims`.`items` (`name`, `value`) VALUES ('Borat Subsequent Moviefilm', 20.00);
+INSERT INTO `ims`.`items` (`name`, `value`) VALUES ('Avengers Endgame', 30.00);
+INSERT INTO `ims`.`items` (`name`, `value`) VALUES ('Avatar', 10.99);
+INSERT INTO `ims`.`items` (`name`, `value`) VALUES ('Minecraft', 15.00);
+INSERT INTO `ims`.`items` (`name`, `value`) VALUES ('Beat Saber', 9.99);
+INSERT INTO `ims`.`items` (`name`, `value`) VALUES ('Wacky waving inflatable arm flailing tube man', 3.99);
+INSERT INTO `ims`.`items` (`name`, `value`) VALUES ('League Of Legends', 15.00);
+INSERT INTO `ims`.`items` (`name`, `value`) VALUES ('Coffee Machine', 20.00);
+INSERT INTO `ims`.`items` (`name`, `value`) VALUES ('Coffee Machine pots', 5.00);
+INSERT INTO `ims`.`items` (`name`, `value`) VALUES ('Cheese', 2);
