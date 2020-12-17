@@ -20,3 +20,14 @@ INSERT INTO `ims`.`items` (`name`, `value`) VALUES ('League Of Legends', 15.00);
 INSERT INTO `ims`.`items` (`name`, `value`) VALUES ('Coffee Machine', 20.00);
 INSERT INTO `ims`.`items` (`name`, `value`) VALUES ('Coffee Machine pots', 5.00);
 INSERT INTO `ims`.`items` (`name`, `value`) VALUES ('Cheese', 2);
+
+INSERT INTO `ims`.`orders` (`cust_id`) VALUES (4);
+INSERT INTO `ims`.`orders` (`cust_id`) VALUES (5);
+INSERT INTO `ims`.`orders` (`cust_id`) VALUES (6);
+INSERT INTO `ims`.`orders` (`cust_id`) VALUES (7);
+INSERT INTO `ims`.`orders` (`cust_id`) VALUES (8);
+INSERT INTO `ims`.`orders` (`cust_id`) VALUES (9);
+INSERT INTO `ims`.`orders` (`cust_id`) VALUES (10);
+INSERT INTO `ims`.`orders` (`cust_id`) VALUES (3);
+INSERT INTO `ims`.`orders` (`cust_id`) VALUES (2);
+INSERT INTO `ims`.`orders` (`cust_id`) VALUES (1);
