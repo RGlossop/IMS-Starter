@@ -7,16 +7,22 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.utils.DBUtils;
 
 public class ItemDAO implements Dao<Item>{
 
+	public static final Logger LOGGER = LogManager.getLogger();
 	
 	@Override
 	public Item modelFromResultSet(ResultSet resultSet) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Long id = resultSet.getLong("id");
+		String name = resultSet.getString("name");
+		Double value = resultSet.getDouble("value");
+		return new Item(id, name, value);
 	}
 	
 	/**
@@ -30,14 +36,35 @@ public class ItemDAO implements Dao<Item>{
 		return null;
 	}
 	
+	public Item readLatest() {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM items ORDER BY id DESC LIMIT 1");) {
+			resultSet.next();
+			return modelFromResultSet(resultSet);
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+				
+	}
 	/**
 	 * Creates an Item in the database
 	 * 
 	 * @param item - takes in a Item object. id will be ignored
 	 */
 	@Override
-	public Item create(Item t) {
-		// TODO Auto-generated method stub
+	public Item create(Item item) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+			statement.executeUpdate("INSERT INTO items(name, value) values('" + item.getName()
+			+ "'," + item.getValue() + ")");
+			return readLatest();
+		}  catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
 		return null;
 	}
 	
