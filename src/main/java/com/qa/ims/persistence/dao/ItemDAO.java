@@ -32,8 +32,19 @@ public class ItemDAO implements Dao<Item>{
 	 */
 	@Override
 	public List<Item> readAll() {
-		// TODO Auto-generated method stub
-		return null;
+		try(Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("select * from items");) {
+			List<Item> items = new ArrayList<>();
+			while(resultSet.next()) {
+				items.add(modelFromResultSet(resultSet));
+			}
+			return items;
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return new ArrayList<>();
 	}
 	
 	public Item readLatest() {
