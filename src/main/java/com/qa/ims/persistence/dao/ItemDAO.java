@@ -78,7 +78,18 @@ public class ItemDAO implements Dao<Item>{
 		}
 		return null;
 	}
-	
+	public Item readItem(Long id) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM items where id = " + id);) {
+			resultSet.next();
+			return modelFromResultSet(resultSet);
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+	}
 	/**
 	 * Updates an Item in the database
 	 * 
@@ -87,8 +98,16 @@ public class ItemDAO implements Dao<Item>{
 	 * @return
 	 */
 	@Override
-	public Item update(Item t) {
-		// TODO Auto-generated method stub
+	public Item update(Item item) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+			statement.executeUpdate("update items set name='" + item.getName() + "', value ="
+				+ item.getValue() + " where id =" + item.getId());
+			return readItem(item.getId());
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
 		return null;
 	}
 	
