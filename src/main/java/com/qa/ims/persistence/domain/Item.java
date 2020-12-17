@@ -5,12 +5,12 @@ public class Item {
 	private Long id;
 	private String name;
 	private Double value;
-	
+
 	public Item(String name, Double value) {
 		this.name = name;
 		this.value = value;
 	}
-	
+
 	public Item(Long id, String name, Double value) {
 		this.id = id;
 		this.name = name;
@@ -45,6 +45,7 @@ public class Item {
 	public String toString() {
 		return "id:" + id + " name:" + name + " value:" + value;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -71,6 +72,5 @@ public class Item {
 			return false;
 		return true;
 	}
-	
-	
+
 }
