@@ -5,6 +5,7 @@ public class Item {
 	private Long id;
 	private String name;
 	private Double value;
+	private Long quantity= null;
 
 	public Item(String name, Double value) {
 		this.name = name;
@@ -17,6 +18,13 @@ public class Item {
 		this.value = value;
 	}
 
+	public Item (Long id, String name, Double value, Long quantity) {
+		this.id = id;
+		this.name = name;
+		this.value = value;
+		this.quantity = quantity;
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -41,8 +49,19 @@ public class Item {
 		this.value = value;
 	}
 
+	public Long getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Long quantity) {
+		this.quantity = quantity;
+	}
+
 	@Override
 	public String toString() {
+		if (quantity != null) {
+			return "item_id:" + id + " name:" + name + ",  value:" + value + ", quantity: " + quantity + " ";
+		}
 		return "id:" + id + " name:" + name + " value:" + value;
 	}
 

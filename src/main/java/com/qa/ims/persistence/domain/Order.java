@@ -1,17 +1,17 @@
 package com.qa.ims.persistence.domain;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Order {
 	private Long id;
 	private Long cust_ID;
-	private ArrayList<Item> items;
+	private List<Item> items;
 
-	public Order(Long cust_ID, ArrayList<Item> items) {
+	public Order(Long cust_ID, List<Item> items) {
 		this.cust_ID = cust_ID;
 		this.items = items;
 	}
-	public Order(Long id, Long cust_ID, ArrayList<Item> items) {
+	public Order(Long id, Long cust_ID, List<Item> items) {
 		this.id = id;
 		this.cust_ID = cust_ID;
 		this.items = items;
@@ -28,15 +28,21 @@ public class Order {
 	public void setCust_ID(Long cust_ID) {
 		this.cust_ID = cust_ID;
 	}
-	public ArrayList<Item> getItems() {
+	public List<Item> getItems() {
 		return items;
 	}
-	public void setItems(ArrayList<Item> items) {
+	public void setItems(List<Item> items) {
 		this.items = items;
 	}
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", cust_ID=" + cust_ID + ", items=" + items + "]";
+		double totalPrice = 0;
+		String itemString = "\n";
+		for (Item item : items) {
+			totalPrice += (item.getValue() * item.getQuantity());
+			itemString += item.toString() + "\n";
+		}
+		return "\nOrder id=" + id + ", cust_ID=" + cust_ID + ", items;" + itemString + "Total Price = £" + totalPrice + "\n";
 	}
 	@Override
 	public boolean equals(Object obj) {
