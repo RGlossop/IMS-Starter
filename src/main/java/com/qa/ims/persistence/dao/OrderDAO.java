@@ -17,7 +17,6 @@ import com.qa.ims.utils.DBUtils;
 public class OrderDAO implements Dao<Order>{
 
 	public static final Logger LOGGER = LogManager.getLogger();
-	
 	ItemDAO itemDAO = new ItemDAO();
 	@Override
 	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
@@ -82,7 +81,24 @@ public class OrderDAO implements Dao<Order>{
 
 	@Override
 	public int delete(long id) {
-		// TODO Auto-generated method stub
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+			return statement.executeUpdate("delete from orders where id = " + id);
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return 0;
+	}
+
+	public int deleteOrderItems(long orderID) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+			return statement.executeUpdate("delete from order_items where order_id = " + orderID);
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
 		return 0;
 	}
 

@@ -49,4 +49,17 @@ public class Utils {
 		return doubleInput;
 	}
 
+	public int getInt() {
+		String input = getString();
+		Integer intInput = null;
+		do {
+			try {
+				intInput = Integer.parseInt(input);
+				
+			}catch (NumberFormatException nfe) {
+				LOGGER.info("Error - Please enter a number");
+			}
+		} while (intInput == null);
+		return intInput.intValue();
+	}
 }
