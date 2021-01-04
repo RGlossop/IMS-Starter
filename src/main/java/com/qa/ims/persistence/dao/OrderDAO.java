@@ -10,23 +10,26 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.DBUtils;
 
-public class OrderDAO implements Dao<Order>{
+public class OrderDAO implements Dao<Order> {
 
 	public static final Logger LOGGER = LogManager.getLogger();
 	ItemDAO itemDAO = new ItemDAO();
+
 	@Override
 	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
 		Long id = resultSet.getLong("id");
 		Long cust_id = resultSet.getLong("cust_id");
 		List<Item> items = readItems(id);
-		
+
 		return new Order(id, cust_id, items);
-		
+
 	}
+
 	/**
 	 * Reads all orders from the database
 	 * 
@@ -36,7 +39,7 @@ public class OrderDAO implements Dao<Order>{
 	public List<Order> readAll() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("select * from orders");) {
+				ResultSet resultSet = statement.executeQuery("select * from orders ORDER BY id ASC");) {
 			List<Order> orders = new ArrayList<>();
 			while (resultSet.next()) {
 				orders.add(modelFromResultSet(resultSet));
@@ -48,7 +51,7 @@ public class OrderDAO implements Dao<Order>{
 		}
 		return new ArrayList<>();
 	}
-	
+
 	public List<Item> readItems(Long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
@@ -67,9 +70,34 @@ public class OrderDAO implements Dao<Order>{
 		return null;
 	}
 
+	public Order readLatest() {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders ORDER BY id DESC LIMIT 1");) {
+			resultSet.next();
+			return modelFromResultSet(resultSet);
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+	}
+
+	/**
+	 * Creates a order in the database
+	 * 
+	 * @param order - takes in a order object. id will be ignored
+	 */
 	@Override
-	public Order create(Order t) {
-		// TODO Auto-generated method stub
+	public Order create(Order order) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+			statement.executeUpdate("INSERT INTO orders(cust_id) values('" + order.getCust_ID() + "')");
+			return readLatest();
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
 		return null;
 	}
 
@@ -101,7 +129,14 @@ public class OrderDAO implements Dao<Order>{
 		}
 		return 0;
 	}
-
-
+	public void addOrderItems(Long orderID, long itemID) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+				statement.executeUpdate("INSERT INTO order_items(order_id, item_id) values(" + orderID + ", " + itemID + ")");
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+	}
 
 }

@@ -7,6 +7,10 @@ public class Order {
 	private Long cust_ID;
 	private List<Item> items;
 
+	public Order(Long cust_ID) {
+		super();
+		this.cust_ID = cust_ID;
+	}
 	public Order(Long cust_ID, List<Item> items) {
 		this.cust_ID = cust_ID;
 		this.items = items;

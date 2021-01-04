@@ -5,8 +5,10 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.qa.ims.persistence.dao.CustomerDAO;
 import com.qa.ims.persistence.dao.ItemDAO;
 import com.qa.ims.persistence.dao.OrderDAO;
+import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.Utils;
 
@@ -16,13 +18,15 @@ public class OrderController implements CrudController<Order> {
 	
 	private OrderDAO orderDAO;
 	private ItemDAO itemDAO;
+	private CustomerDAO customerDAO;
 	private Utils utils;
 	
-	public OrderController(OrderDAO orderDAO, Utils utils, ItemDAO itemDAO) {
+	public OrderController(OrderDAO orderDAO, Utils utils, ItemDAO itemDAO, CustomerDAO customerDAO) {
 		super();
 		this.orderDAO = orderDAO;
 		this.itemDAO = itemDAO;
 		this.utils = utils;
+		this.customerDAO = customerDAO;
 	}
 	@Override
 	public List<Order> readAll() {
@@ -35,7 +39,22 @@ public class OrderController implements CrudController<Order> {
 
 	@Override
 	public Order create() {
-		// TODO Auto-generated method stub
+		customerDAO.readAll();
+		LOGGER.info("please enter the customers ID");
+		long custID = utils.getLong();
+		Order order = orderDAO.create(new Order(custID));
+		String repeat;
+		do {
+			List<Item> items = itemDAO.readAll();
+			for (Item item: items) {
+				LOGGER.info(item.toString());
+			}
+			LOGGER.info("please enter the item ID to add");
+			long itemID = utils.getLong();
+			orderDAO.addOrderItems(order.getId(), itemID);
+			LOGGER.info("Would you like to add another?");
+			repeat = utils.getString();
+		} while (repeat.toLowerCase().equals("yes"));
 		return null;
 	}
 
