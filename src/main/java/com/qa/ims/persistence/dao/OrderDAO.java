@@ -10,7 +10,6 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.DBUtils;
@@ -51,7 +50,18 @@ public class OrderDAO implements Dao<Order> {
 		}
 		return new ArrayList<>();
 	}
-
+	public Order readOrder(Long id) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders where id = " + id);) {
+			resultSet.next();
+			return modelFromResultSet(resultSet);
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+	}
 	public List<Item> readItems(Long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
@@ -102,11 +112,18 @@ public class OrderDAO implements Dao<Order> {
 	}
 
 	@Override
-	public Order update(Order t) {
-		// TODO Auto-generated method stub
+	public Order update(Order order) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+			statement.executeUpdate(
+					"update orders set cust_id =" + order.getCust_ID() + " where id =" + order.getId());
+			return readOrder(order.getId());
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
 		return null;
 	}
-
 	@Override
 	public int delete(long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -119,7 +136,7 @@ public class OrderDAO implements Dao<Order> {
 		return 0;
 	}
 
-	public int deleteOrderItems(long orderID) {
+	public int deleteOrderItems(Long orderID) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
 			return statement.executeUpdate("delete from order_items where order_id = " + orderID);
@@ -129,10 +146,20 @@ public class OrderDAO implements Dao<Order> {
 		}
 		return 0;
 	}
-	public void addOrderItems(Long orderID, long itemID) {
+	public int deleteOrderItem(Long orderID, Long itemID) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-				statement.executeUpdate("INSERT INTO order_items(order_id, item_id) values(" + orderID + ", " + itemID + ")");
+			return statement.executeUpdate("delete from order_items where order_id = " + orderID + " && item_id=" + itemID);
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return 0;
+	}
+	public void addOrderItems(Long orderID, Long itemID, Long quantity) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+				statement.executeUpdate("INSERT INTO order_items(order_id, item_id, quantity) values(" + orderID + ", " + itemID + ", " + quantity + ")");
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
