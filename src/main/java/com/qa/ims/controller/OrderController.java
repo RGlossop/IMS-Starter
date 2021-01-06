@@ -62,7 +62,7 @@ public class OrderController implements CrudController<Order> {
 			LOGGER.info("Would you like to add another?");
 			repeat = utils.getString();
 		} while (repeat.toLowerCase().equals("yes"));
-		return null;
+		return order;
 	}
 	/**
 	 * Updates an existing Order by taking in user input
