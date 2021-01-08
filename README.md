@@ -1,12 +1,15 @@
 Coverage: 80%
-# Project Title
+# IMS Project
 
-One Paragraph of project description goes here
+Inventory management system using Java, MySQL and some other supporting technologies 
 
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
+You can find my Jira [here](https://rg6.atlassian.net/jira/software/projects/IMS/boards/1)
+
+And my GitHub Repository[here](https://github.com/RGlossop/IMS-Starter)
 ### Prerequisites
 
 [Java](https://www.java.com/en/download/)
@@ -41,9 +44,10 @@ Ensure a database named ims is in your sql.
 
 Fork and clone repositry  
 Or  
-Clone repositry
+Clone repositry  
+From [My Github](https://github.com/RGlossop/IMS-Starter)
 
-run IMSRunnableJar.jar  
+run IMSRunnableJar.jar  from the Documentation folder
 
 Enter username and password  
 Type Customer  
@@ -52,6 +56,8 @@ Type Read
 This will show all customers in the database.
 
 ## Running the tests
+To Run the tests, right click the root folder in eclipse and choose Coverage as -> Junit test
+
 ### Unit Tests 
 
 DAO Tests ensure that the DAO is connecting to a database and altering table data 
@@ -92,12 +98,12 @@ in order to deploy this to a live server ensure a database named ims is availabl
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning.
+I used the style v0.0.0.0 for versioning
 
 ## Authors
 
 * **Chris Perrins** - *Initial work* - [christophperrins](https://github.com/christophperrins)
-* **Ryan Glossop** - *Updated and worked on the project*
+* **Ryan Glossop** - *Updated and worked on the project* - [https://github.com/RGlossop]
 
 ## License
 
