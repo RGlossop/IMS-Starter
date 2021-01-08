@@ -122,6 +122,16 @@ public class CustomerDAO implements Dao<Customer> {
 	public int delete(long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM orders where cust_id =" + id);
+			List<Long> deleteList = new ArrayList<>();
+			while(resultSet.next()) {
+				Long deleteID = resultSet.getLong("id");
+				deleteList.add(deleteID);
+			}
+			for(Long deleteID: deleteList) {
+				statement.executeUpdate("DELETE from order_items where order_id=" + deleteID);
+			}
+			statement.executeUpdate("delete from orders where cust_id =" + id);
 			return statement.executeUpdate("delete from customers where id = " + id);
 		} catch (Exception e) {
 			LOGGER.debug(e);
